@@ -1,1 +1,23 @@
-
+server:
+  port: 8000
+spring:
+  application:
+    name: api-gateway-service
+  profiles:
+    group:
+      "default": "dev"
+  cloud:
+    gateway:
+      routes:
+        - id: auth-service
+          uri: lb://AUTH-SERVICE
+          predicates:
+            - Path=/auth-service/**
+          filters:
+            - RewritePath=/auth-service/(?<segment>.*), /$\{segment}
+        - id : town-service
+          uri: lb://TOWN-SERVICE
+          predicates:
+            - Path=/town-service/**
+          filters:
+            - RewritePath=/town-service/(?<segment>.*), /$\{segment}
