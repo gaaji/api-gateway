@@ -6,18 +6,29 @@ spring:
   profiles:
     group:
       "default": "dev"
+  config:
+    import: secret.yml
   cloud:
     gateway:
       routes:
         - id: auth-service
           uri: lb://AUTH-SERVICE
           predicates:
+            - Path=/auth-service/oauth2/**
+          filters:
+            - RewritePath=/auth-service/(?<segment>.*), /$\{segment}
+        - id: auth-service
+          uri: lb://AUTH-SERVICE
+          predicates:
             - Path=/auth-service/**
           filters:
             - RewritePath=/auth-service/(?<segment>.*), /$\{segment}
+            - JwtParsingFilter
+
         - id : town-service
           uri: lb://TOWN-SERVICE
           predicates:
             - Path=/town-service/**
           filters:
             - RewritePath=/town-service/(?<segment>.*), /$\{segment}
+            - JwtParsingFilter
