@@ -1,5 +1,8 @@
 package com.gaaji.apigateway.filter;
 
+import com.gaaji.apigateway.exception.AccessTokenExpiredException;
+import com.gaaji.apigateway.exception.AccessTokenInvalidException;
+import com.gaaji.apigateway.exception.AccessTokenMissingException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import java.nio.charset.StandardCharsets;
@@ -42,7 +45,7 @@ public class JwtParsingFilter extends AbstractGatewayFilterFactory<JwtParsingFil
             ServerHttpResponse response = exchange.getResponse();
 
             if (!request.getHeaders().containsKey(HttpHeaders.AUTHORIZATION)) {
-                // 토큰이없어 ???
+                throw new AccessTokenMissingException();
             }
 
 
@@ -64,23 +67,16 @@ public class JwtParsingFilter extends AbstractGatewayFilterFactory<JwtParsingFil
                 .parseClaimsJws(token).getBody();
 
         if (!claims.getExpiration().after(new Date())) {
-
+            throw new AccessTokenExpiredException();
         }
 
         if (!StringUtils.hasText(claims.getSubject())) {
-
+            throw new AccessTokenInvalidException();
         }
 
         return claims.getSubject();
     }
 
-    private Mono<Void> onError(ServerWebExchange exchange, String message, HttpStatus status) {
-        ServerHttpResponse response = exchange.getResponse();
-        response.setStatusCode(status);
-
-
-        return response.setComplete();
-    }
     @Data
     public static class Config {
 
