@@ -8,9 +8,9 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ExceptionHandlerConfig {
 
-//    @Bean
-//    public ErrorWebExceptionHandler globalWebExceptionHandler(){
-//        return new GlobalWebExceptionHandler();
-//    }
+    @Bean
+    public ErrorWebExceptionHandler globalWebExceptionHandler(){
+        return new GlobalWebExceptionHandler();
+    }
 
 }
