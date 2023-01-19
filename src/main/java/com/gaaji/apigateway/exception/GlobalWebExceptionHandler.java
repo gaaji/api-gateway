@@ -34,7 +34,9 @@ public class GlobalWebExceptionHandler implements ErrorWebExceptionHandler {
             response.setStatusCode( ((AbstractApiException) ex).getHttpStatus());
 
 
-        }else{
+        }
+        else{
+            log.error("UNHANDLED_SERVER_ERROR 발생!! ", ex);
             errorResponse = ErrorResponse.createErrorResponse(UNHANDLED_SERVER_ERROR,
                     String.valueOf(request.getPath()));
             response.setStatusCode(UNHANDLED_SERVER_ERROR.getHttpStatus());

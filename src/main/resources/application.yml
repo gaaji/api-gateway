@@ -29,7 +29,7 @@ spring:
             - Path=/auth-service/**
           filters:
             - RewritePath=/auth-service/(?<segment>.*), /$\{segment}
-            - JwtParsingFilter
+            - AuthorizationParsingFilter
 
         - id : town-service
           uri: lb://TOWN-SERVICE
@@ -37,4 +37,12 @@ spring:
             - Path=/town-service/**
           filters:
             - RewritePath=/town-service/(?<segment>.*), /$\{segment}
-            - JwtParsingFilter
+            - AuthorizationParsingFilter
+        - id : used-item-service
+          uri: lb://USED-ITEM-SERVICE
+          predicates:
+            - Path=/used-item-service/**
+          filters:
+            - RewritePath=/used-item-service/(?<segment>.*), /$\{segment}
+            - AuthorizationParsingFilter
+            - TownTokenParsingFilter
