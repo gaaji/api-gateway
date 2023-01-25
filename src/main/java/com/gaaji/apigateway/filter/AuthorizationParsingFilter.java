@@ -1,7 +1,7 @@
 package com.gaaji.apigateway.filter;
 
-import com.gaaji.apigateway.exception.TokenExpiredException;
-import com.gaaji.apigateway.exception.TokenInvalidException;
+import com.gaaji.apigateway.exception.AccessTokenExpiredException;
+import com.gaaji.apigateway.exception.AccessTokenInvalidException;
 import com.gaaji.apigateway.exception.AccessTokenMissingException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -63,11 +63,11 @@ public class AuthorizationParsingFilter extends AbstractGatewayFilterFactory<Aut
                 .parseClaimsJws(token).getBody();
 
         if (!claims.getExpiration().after(new Date())) {
-            throw new TokenExpiredException();
+            throw new AccessTokenExpiredException();
         }
 
         if (!StringUtils.hasText(claims.getSubject())) {
-            throw new TokenInvalidException();
+            throw new AccessTokenInvalidException();
         }
 
         return claims.getSubject();

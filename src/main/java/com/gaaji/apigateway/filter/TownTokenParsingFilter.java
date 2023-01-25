@@ -1,21 +1,19 @@
 package com.gaaji.apigateway.filter;
 
-import com.gaaji.apigateway.exception.TokenExpiredException;
-import com.gaaji.apigateway.exception.TokenInvalidException;
-import com.gaaji.apigateway.exception.AccessTokenMissingException;
+import com.gaaji.apigateway.exception.TownTokenExpiredException;
+import com.gaaji.apigateway.exception.TownTokenInvalidException;
+import com.gaaji.apigateway.exception.TownTokenMissingException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.Date;
-import java.util.List;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.core.env.Environment;
 import org.springframework.http.server.reactive.ServerHttpRequest;
-import org.springframework.http.server.reactive.ServerHttpRequest.Builder;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -43,7 +41,7 @@ public class TownTokenParsingFilter extends
             ServerHttpResponse response = exchange.getResponse();
 
             if (!request.getHeaders().containsKey("X-TOWN-TOKEN")) {
-                throw new AccessTokenMissingException();
+                throw new TownTokenMissingException();
             }
 
             String townToken = request.getHeaders().get("X-TOWN-TOKEN").get(0);
@@ -66,11 +64,11 @@ public class TownTokenParsingFilter extends
                 .parseClaimsJws(token).getBody();
 
         if (!claims.getExpiration().after(new Date())) {
-            throw new TokenExpiredException();
+            throw new TownTokenExpiredException();
         }
 
         if (!StringUtils.hasText(claims.getSubject())) {
-            throw new TokenInvalidException();
+            throw new TownTokenInvalidException();
         }
 
         return claims.getSubject();
