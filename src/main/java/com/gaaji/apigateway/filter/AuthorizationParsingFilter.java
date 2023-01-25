@@ -9,6 +9,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.Date;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.core.env.Environment;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 
+@Slf4j
 @Component
 public class AuthorizationParsingFilter extends AbstractGatewayFilterFactory<AuthorizationParsingFilter.Config> {
 
@@ -48,8 +50,7 @@ public class AuthorizationParsingFilter extends AbstractGatewayFilterFactory<Aut
                     .replace("Bearer ", "");
 
             String authId = parseJwt(accessToken);
-
-            request = exchange.getRequest().mutate().header("authId", authId)
+            request = exchange.getRequest().mutate().header(HttpHeaders.AUTHORIZATION, authId)
                     .build();
 
             //Custom Post Filter
