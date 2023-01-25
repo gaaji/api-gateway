@@ -18,10 +18,15 @@ public enum GatewayErrorCode implements ErrorCode{
     ACCESS_TOKEN_MISSING(HttpStatus.UNAUTHORIZED, "G-0002",
             "로그인 후 이용해주세요."),
     ACCESS_TOKEN_EXPIRED(HttpStatus.UNAUTHORIZED, "G-0003",
-            "토큰이 만료되었습니다."),
+            "엑세스 토큰이 만료되었습니다."),
     ACCESS_TOKEN_INVALID(HttpStatus.UNAUTHORIZED, "G-0004",
-            "토큰이 유효하지 않습니다."),
-
+            "엑세스 토큰이 유효하지 않습니다."),
+    TOWN_TOKEN_MISSING(HttpStatus.UNAUTHORIZED, "G-0005",
+            "동네 토큰이 존재하지 않습니다."),
+    TOWN_TOKEN_EXPIRED(HttpStatus.UNAUTHORIZED, "G-0006",
+            "동네 토큰이 만료되었습니다."),
+    TOWN_TOKEN_INVALID(HttpStatus.UNAUTHORIZED, "G-0007",
+            "동네 토큰이 유효하지 않습니다."),
 
     ;
 
