@@ -11,7 +11,7 @@ permissions:
   contents: read
 
 env:
-  DOCKER_IMAGE: ghcr.io/${{ github.actor }}/trading
+  DOCKER_IMAGE: ghcr.io/${{ github.actor }}/gaaji-api-gateway
   VERSION: ${{ github.sha }}
   NAME: gaaji-api-gateway
 
@@ -73,6 +73,6 @@ jobs:
        context: . 			# dockerfile이 있는 위치랑 맞춰주자
        file: ./Dockerfile	# 빌드할 Dockerfile이 있는 디렉토리
        push: true
-       tags: ${{ env.DOCKER_IMAGE }}:latest
+       tags: ${{ env.DOCKER_IMAGE }}:local
         
     
