@@ -46,3 +46,17 @@ spring:
             - RewritePath=/used-item-service/(?<segment>.*), /$\{segment}
             - AuthorizationParsingFilter
             - TownTokenParsingFilter
+        - id: block-service
+          uri: lb://BLOCK-SERVICE
+          predicates:
+            - Path=/block-service/**
+          filters:
+            - RewritePath=/block-service/(?<segment>.*), /$\{segment}
+            - AuthorizationParsingFilter
+        - id: chat-api
+          uri: lb://CHAT-API
+          predicates:
+            - Path=/chat-api/**
+          filters:
+            - RewritePath=/block-service/(?<segment>.*), /$\{segment}
+            - AuthorizationParsingFilter
