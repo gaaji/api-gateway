@@ -1,6 +1,6 @@
 
 
-name: Java CI with Gradle
+name: Java CI And Build DokcerFile on Local with Gradle
 
 on:
 
@@ -11,7 +11,7 @@ permissions:
   contents: read
 
 env:
-  DOCKER_IMAGE: ghcr.io/${{ github.actor }}/gaaji-api-gateway
+  DOCKER_IMAGE: ghcr.io/gaaji/api-gateway
   VERSION: ${{ github.sha }}
   NAME: gaaji-api-gateway
 
