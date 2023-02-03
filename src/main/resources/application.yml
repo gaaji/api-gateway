@@ -58,5 +58,25 @@ spring:
           predicates:
             - Path=/chat-api/**
           filters:
-            - RewritePath=/block-service/(?<segment>.*), /$\{segment}
+            - RewritePath=/chat-api/(?<segment>.*), /$\{segment}
             - AuthorizationParsingFilter
+        - id: chat-message
+          uri: lb://chat-message
+          predicates:
+            - Path=/chat-api/token
+          filters:
+            - RewritePath=/chat-api/(?<segment>.*), /$\{segment}
+            - AuthorizationParsingFilter
+
+        - id: chat-message
+          uri: lb:ws//chat-message
+          predicates:
+            - Path=/chat-api/**
+          filters:
+            - RewritePath=/chat-api/(?<segment>.*), /$\{segment}
+        - id: chat-status-management
+          uri: lb://chat-status-management
+          predicates:
+            - Path=/chat-status-management/**
+          filters:
+            - RewritePath=/chat-status-management/(?<segment>.*), /$\{segment}
