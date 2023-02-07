@@ -30,7 +30,6 @@ spring:
           filters:
             - RewritePath=/auth-service/(?<segment>.*), /$\{segment}
             - AuthorizationParsingFilter
-
         - id : town-service
           uri: lb://TOWN-SERVICE
           predicates:
@@ -67,7 +66,6 @@ spring:
           filters:
             - RewritePath=/chat-api/(?<segment>.*), /$\{segment}
             - AuthorizationParsingFilter
-
         - id: chat-message
           uri: lb:ws//chat-message
           predicates:
@@ -80,3 +78,9 @@ spring:
             - Path=/chat-status-management/**
           filters:
             - RewritePath=/chat-status-management/(?<segment>.*), /$\{segment}
+        - id: interest-service
+          uri: lb://interest-service
+          predicates:
+            - Path=/interest-service/**
+          filters:
+            - RewritePath=/interest-service/(?<segment>.*), /$\{segment}
