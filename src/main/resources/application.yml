@@ -84,3 +84,12 @@ spring:
             - Path=/interest-service/**
           filters:
             - RewritePath=/interest-service/(?<segment>.*), /$\{segment}
+            - AuthorizationParsingFilter
+        - id: notification-service
+          uri: lb://notification-service
+          predicates:
+            - Path=/notification-service/**
+          filters:
+            - RewritePath=/notification-service/(?<segment>.*), /$\{segment}
+            - AuthorizationParsingFilter
+
