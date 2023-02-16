@@ -10,6 +10,18 @@ spring:
     import: secret.yml
   cloud:
     gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: 'http://127.0.0.1:5173'
+            allow-credentials: true
+            allowedHeaders: '*'
+            allowedMethods:
+              - PUT
+              - GET
+              - POST
+              - DELETE
+              - OPTIONS
       routes:
         - id: auth-service
           uri: lb://AUTH-SERVICE
