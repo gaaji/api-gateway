@@ -22,6 +22,7 @@ spring:
               - POST
               - DELETE
               - OPTIONS
+              - PATCH
       routes:
         - id: auth-service
           uri: lb://AUTH-SERVICE
